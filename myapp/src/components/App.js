@@ -10,7 +10,7 @@ import {
   AuthProvider,
   useSigninCheck,
 } from "reactfire";
-import { Auth } from "./Auth.tsx";
+import { Auth } from "../firebase/Auth.tsx";
 
 function App() {
   const app = useFirebaseApp();
