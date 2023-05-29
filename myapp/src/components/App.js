@@ -10,6 +10,7 @@ import {
   AuthProvider,
   useSigninCheck,
 } from "reactfire";
+import { AppContent } from "./AppContent.tsx";
 import { Auth } from "../firebase/Auth.tsx";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
     <AuthProvider sdk={auth}>
       <DatabaseProvider sdk={database}>
         <FirestoreProvider sdk={firestoreInstance}>
-          <Auth />
+          <AppContent />
         </FirestoreProvider>
       </DatabaseProvider>
     </AuthProvider>
