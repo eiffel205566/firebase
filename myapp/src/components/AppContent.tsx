@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  useAuth,
-  useUser,
-  SuspenseWithPerf,
-  useSigninCheck,
-  SigninCheckResult,
-} from "reactfire";
+import { useAuth, useSigninCheck, SigninCheckResult } from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import {
@@ -30,7 +24,7 @@ export const AppContent = () => {
           path='/home'
           element={
             <ProtectedRoute user={signInCheckResult?.user} status={status}>
-              <Home user={signInCheckResult?.user} />
+              <Home />
             </ProtectedRoute>
           }
         />
@@ -59,11 +53,7 @@ const ProtectedRoute = ({
   return children;
 };
 
-const Home = ({
-  user,
-}: {
-  user?: SigninCheckResult["user"];
-}): React.ReactElement => {
+const Home = (): React.ReactElement => {
   const auth = useAuth();
 
   return (
@@ -76,6 +66,13 @@ const LoginPage = ({ user, status }) => {
   const auth = useAuth();
   const navigate = useNavigate();
   const isUserDefined = status === "success" && user != null;
+  const isSigningIn = status === "loading" && user == null;
+  const isSigningOut = status === "loading" && user != null;
+  const message = isSigningIn
+    ? "Signing in"
+    : isSigningOut
+    ? "Signing out"
+    : `Click to Sign ${isUserDefined ? "Out" : "In"}`;
 
   return (
     <div title='Sign-in form'>
@@ -85,8 +82,9 @@ const LoginPage = ({ user, status }) => {
             ? signOut(auth)
             : signIn(auth).then(() => navigate("/home"));
         }}
+        disabled={status === "loading"}
       >
-        {`Click to Sign ${isUserDefined ? "Out" : "In"}`}
+        {message}
       </button>
     </div>
   );
