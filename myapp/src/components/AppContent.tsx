@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth, useSigninCheck, SigninCheckResult } from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import HomePage from "../pages/HomePage";
 
 import {
   BrowserRouter,
@@ -24,7 +25,7 @@ export const AppContent = () => {
           path='/home'
           element={
             <ProtectedRoute user={signInCheckResult?.user} status={status}>
-              <Home />
+              <HomePage user={signInCheckResult?.user} />
             </ProtectedRoute>
           }
         />
@@ -53,15 +54,6 @@ const ProtectedRoute = ({
   return children;
 };
 
-const Home = (): React.ReactElement => {
-  const auth = useAuth();
-
-  return (
-    <div title='Sign Out'>
-      <button onClick={() => signOut(auth)}>Sign out</button>
-    </div>
-  );
-};
 const LoginPage = ({ user, status }) => {
   const auth = useAuth();
   const navigate = useNavigate();
@@ -90,7 +82,8 @@ const LoginPage = ({ user, status }) => {
   );
 };
 
-const signOut = auth => auth.signOut().then(() => console.log("signed out"));
+export const signOut = auth =>
+  auth.signOut().then(() => console.log("signed out"));
 const signIn = async auth => {
   const provider = new GoogleAuthProvider();
 
