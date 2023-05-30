@@ -1,15 +1,10 @@
 import React from "react";
-import { useAuth, useSigninCheck, SigninCheckResult } from "reactfire";
+import { useSigninCheck, SigninCheckResult } from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import HomePage from "../pages/HomePage.tsx";
+import LoginPage from "../pages/LoginPage.tsx";
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const AppContent = () => {
   const { data: signInCheckResult, status } = useSigninCheck();
@@ -54,37 +49,9 @@ const ProtectedRoute = ({
   return children;
 };
 
-const LoginPage = ({ user, status }) => {
-  const auth = useAuth();
-  const navigate = useNavigate();
-  const isUserDefined = status === "success" && user != null;
-  const isSigningIn = status === "loading" && user == null;
-  const isSigningOut = status === "loading" && user != null;
-  const message = isSigningIn
-    ? "Signing in"
-    : isSigningOut
-    ? "Signing out"
-    : `Click to Sign ${isUserDefined ? "Out" : "In"}`;
-
-  return (
-    <div title='Sign-in form'>
-      <button
-        onClick={() => {
-          isUserDefined
-            ? signOut(auth)
-            : signIn(auth).then(() => navigate("/home"));
-        }}
-        disabled={status === "loading"}
-      >
-        {message}
-      </button>
-    </div>
-  );
-};
-
 export const signOut = auth =>
   auth.signOut().then(() => console.log("signed out"));
-const signIn = async auth => {
+export const signIn = async auth => {
   const provider = new GoogleAuthProvider();
 
   await signInWithPopup(auth, provider);
