@@ -26,7 +26,7 @@ import {
   orderBy,
   setDoc,
 } from "firebase/firestore";
-import { signOut } from "../components/AppContent";
+import { signOut } from "../components/AppContent.tsx";
 
 const HomePage = ({
   user,

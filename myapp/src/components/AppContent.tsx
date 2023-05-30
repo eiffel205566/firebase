@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth, useSigninCheck, SigninCheckResult } from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/HomePage.tsx";
 
 import {
   BrowserRouter,
