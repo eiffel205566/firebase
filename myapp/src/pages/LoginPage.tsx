@@ -19,7 +19,7 @@ const LoginPage = ({ user, status }) => {
     return <Navigate to='/home' replace />;
   } else {
     return (
-      <div title='Sign-in form'>
+      <div className='loginPage h-full w-full bg-gray-500' title='Sign-in form'>
         <button
           onClick={() => {
             signIn(auth);
