@@ -47,6 +47,11 @@ export const AppContent = () => {
       );
       const userQuerySnapshot = await getDocs(userQuery);
 
+      if (!userQuerySnapshot.empty) {
+        const ref = doc(onlineUsersRef, uid);
+        await updateDoc(ref, { status: "online" });
+      }
+
       if (userQuerySnapshot.empty && !userAdditionRef.current) {
         userAdditionRef.current = true;
         await setDoc(doc(onlineUsersRef, uid), {
