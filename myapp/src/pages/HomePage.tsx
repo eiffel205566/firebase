@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   getDatabase,
   ref,
@@ -22,8 +22,11 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {
   collection,
   doc,
+  where,
   getFirestore,
   orderBy,
+  getDocs,
+  getDoc,
   setDoc,
 } from "firebase/firestore";
 import { signOut } from "../components/AppContent.tsx";
@@ -33,33 +36,45 @@ const HomePage = ({
 }: {
   user?: SigninCheckResult["user"];
 }): React.ReactElement => {
-  const database = useDatabase();
   const auth = useAuth();
   const firestore = useFirestore();
-  const userCollection = collection(firestore, "onlineUsers");
-  const usersQuery = query(userCollection);
-  const queryResult = useFirestoreCollectionData(usersQuery);
-  console.log(user);
+  const onlineUsersRef = collection(firestore, "onlineUsers");
+  const onlineUsersQuery = query(onlineUsersRef);
+  const onlineUsersQueryResult = useFirestoreCollectionData(onlineUsersQuery);
 
-  // const ref = firestore().collection("usersOnline");
-  // const query = ref.orderBy("uid");
+  const [isUserLoggedIn, setUserLoggedIn] = useState(false);
 
-  // console.log(collection(firestore, "usersOnline"));
-  const userCollectionref = collection(firestore, "onlineUsers");
-  const addUser = async () => {
-    await setDoc(doc(userCollectionref), {
-      uid: "newUser2",
-      userName: "name-newUser2",
-    });
-  };
+  // add logged in user to db to ensure we can query all onlined users
+  useEffect(() => {
+    (async () => {
+      const userQuery = query(
+        collection(firestore, "onlineUsers"),
+        where("uid", "==", user?.uid ?? "")
+      );
+      const userQuerySnapshot = await getDocs(userQuery);
+
+      if (userQuerySnapshot.empty) {
+        console.log("add");
+        const { uid, displayName: userName } = user ?? {};
+        await setDoc(doc(onlineUsersRef), {
+          uid,
+          userName,
+        });
+      }
+      setUserLoggedIn(true);
+    })();
+  }, [firestore, user?.uid]);
+
+  if (!isUserLoggedIn || onlineUsersQueryResult.status === "loading")
+    return <>Loading...</>;
 
   return (
     <div title='Sign Out'>
       {user && <div>{`Hello, ${user.displayName}`}</div>}
       <button onClick={() => signOut(auth)}>Sign out</button>
-      <button onClick={() => addUser()}>add user</button>
-      {queryResult.status === "success" &&
-        queryResult.data.map((d, index) => <div key={index}>{d.userName}</div>)}
+      {onlineUsersQueryResult.data.map((d, index) => (
+        <div key={index}>{d.userName}</div>
+      ))}
     </div>
   );
 };
