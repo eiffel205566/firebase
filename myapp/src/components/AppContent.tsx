@@ -41,7 +41,7 @@ export const AppContent = () => {
 
       if (userQuerySnapshot.empty && !userAdditionRef.current) {
         userAdditionRef.current = true;
-        await setDoc(doc(onlineUsersRef), {
+        await setDoc(doc(onlineUsersRef, uid), {
           uid,
           userName,
         });
