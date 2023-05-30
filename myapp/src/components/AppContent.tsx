@@ -1,19 +1,32 @@
 import React, { useEffect, useRef } from "react";
 import { useSigninCheck, SigninCheckResult, useFirestore } from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { collection, doc, where, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  where,
+  getDocs,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { query } from "firebase/database";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useBeforeUnload,
+} from "react-router-dom";
 
 import HomePage from "../pages/HomePage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
-
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const AppContent = () => {
   const { data: signInCheckResult, status } = useSigninCheck();
   const firestore = useFirestore();
   const onlineUsersRef = collection(firestore, "onlineUsers");
   const userAdditionRef = useRef(false);
+  const { uid, displayName: userName } = signInCheckResult?.user ?? {};
 
   // add logged in user to db only once to ensure we can query all onlined users
   useEffect(() => {
@@ -22,21 +35,25 @@ export const AppContent = () => {
 
       const userQuery = query(
         collection(firestore, "onlineUsers"),
-        where("uid", "==", signInCheckResult?.user?.uid ?? "")
+        where("uid", "==", uid ?? "")
       );
       const userQuerySnapshot = await getDocs(userQuery);
 
       if (userQuerySnapshot.empty && !userAdditionRef.current) {
         userAdditionRef.current = true;
-        const { uid, displayName: userName } = signInCheckResult?.user ?? {};
         await setDoc(doc(onlineUsersRef), {
           uid,
           userName,
         });
       }
-      // setUserLoggedIn(true);
     })();
   }, [signInCheckResult?.user]);
+
+  // useBeforeUnload(
+  //   React.useCallback(async () => {
+  //     await deleteDoc(doc(onlineUsersRef));
+  //   }, [onlineUsersRef])
+  // );
 
   return (
     <BrowserRouter>
