@@ -64,6 +64,7 @@ export const AppContent = () => {
   }, [signInCheckResult?.user]);
 
   // update user status to offline and log em out
+  // TODO: this is not the right way to handle edge where user just close the tab
   const logout = auth =>
     auth
       .signOut()
