@@ -64,7 +64,7 @@ export const AppContent = () => {
   }, [signInCheckResult?.user]);
 
   // update user status to offline and log em out
-  // TODO: this is not the right way to handle edge where user just close the tab
+  // TODO: this is not the right way to handle edge case where user just close the tab, cloud firestore does not natively provide onDisconnect like realtimedatabase
   const logout = auth =>
     auth
       .signOut()
