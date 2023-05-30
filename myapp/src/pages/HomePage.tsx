@@ -1,22 +1,19 @@
 import React from "react";
-import {
-  query,
-} from "firebase/database";
+import { query } from "firebase/database";
 import {
   useAuth,
   SigninCheckResult,
   useFirestore,
   useFirestoreCollectionData,
 } from "reactfire";
-import {
-  collection,
-} from "firebase/firestore";
-import { signOut } from "../components/AppContent.tsx";
+import { collection } from "firebase/firestore";
 
 const HomePage = ({
   user,
+  signOut,
 }: {
   user?: SigninCheckResult["user"];
+  signOut?: (auth: ReturnType<typeof useAuth>) => void;
 }): React.ReactElement => {
   const auth = useAuth();
   const firestore = useFirestore();

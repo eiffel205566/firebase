@@ -1,5 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { useSigninCheck, SigninCheckResult, useFirestore } from "reactfire";
+import {
+  useSigninCheck,
+  SigninCheckResult,
+  useFirestore,
+  useFirebaseApp,
+  useDatabase,
+  useDatabaseObjectData,
+} from "reactfire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {
   collection,
@@ -8,8 +15,9 @@ import {
   getDocs,
   setDoc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
-import { query } from "firebase/database";
+import { query, ref, set, increment as rtdbIncrement } from "firebase/database";
 import {
   BrowserRouter,
   Routes,
@@ -44,16 +52,21 @@ export const AppContent = () => {
         await setDoc(doc(onlineUsersRef, uid), {
           uid,
           userName,
+          status: "online",
         });
       }
     })();
   }, [signInCheckResult?.user]);
 
-  // useBeforeUnload(
-  //   React.useCallback(async () => {
-  //     await deleteDoc(doc(onlineUsersRef));
-  //   }, [onlineUsersRef])
-  // );
+  // update user status to offline
+  const logout = auth =>
+    auth
+      .signOut()
+      .then(() => {
+        const ref = doc(onlineUsersRef, uid);
+        return updateDoc(ref, { status: "offline" });
+      })
+      .then(() => console.log("signed out"));
 
   return (
     <BrowserRouter>
@@ -66,7 +79,7 @@ export const AppContent = () => {
           path='/home'
           element={
             <ProtectedRoute user={signInCheckResult?.user} status={status}>
-              <HomePage user={signInCheckResult?.user} />
+              <HomePage user={signInCheckResult?.user} signOut={logout} />
             </ProtectedRoute>
           }
         />
@@ -95,8 +108,6 @@ const ProtectedRoute = ({
   return children;
 };
 
-export const signOut = auth =>
-  auth.signOut().then(() => console.log("signed out"));
 export const signIn = async auth => {
   const provider = new GoogleAuthProvider();
 
