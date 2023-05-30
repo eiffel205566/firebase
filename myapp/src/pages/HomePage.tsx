@@ -43,8 +43,9 @@ const HomePage = ({
   const onlineUsersQueryResult = useFirestoreCollectionData(onlineUsersQuery);
 
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
+  const userAdditionRef = useRef(false);
 
-  // add logged in user to db to ensure we can query all onlined users
+  // add logged in user to db only once to ensure we can query all onlined users
   useEffect(() => {
     (async () => {
       const userQuery = query(
@@ -53,8 +54,8 @@ const HomePage = ({
       );
       const userQuerySnapshot = await getDocs(userQuery);
 
-      if (userQuerySnapshot.empty) {
-        console.log("add");
+      if (userQuerySnapshot.empty && !userAdditionRef.current) {
+        userAdditionRef.current = true;
         const { uid, displayName: userName } = user ?? {};
         await setDoc(doc(onlineUsersRef), {
           uid,
@@ -63,7 +64,7 @@ const HomePage = ({
       }
       setUserLoggedIn(true);
     })();
-  }, [firestore, user?.uid]);
+  }, []);
 
   if (!isUserLoggedIn || onlineUsersQueryResult.status === "loading")
     return <>Loading...</>;
