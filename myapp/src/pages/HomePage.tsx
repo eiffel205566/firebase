@@ -13,7 +13,7 @@ const HomePage = ({
   signOut,
 }: {
   user?: SigninCheckResult["user"];
-  signOut?: (auth: ReturnType<typeof useAuth>) => void;
+  signOut: (auth: ReturnType<typeof useAuth>) => void;
 }): React.ReactElement => {
   const auth = useAuth();
   const firestore = useFirestore();
