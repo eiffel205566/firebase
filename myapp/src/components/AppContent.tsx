@@ -63,7 +63,7 @@ export const AppContent = () => {
     })();
   }, [signInCheckResult?.user]);
 
-  // update user status to offline
+  // update user status to offline and log em out
   const logout = auth =>
     auth
       .signOut()

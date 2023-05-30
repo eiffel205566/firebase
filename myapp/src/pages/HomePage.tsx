@@ -22,9 +22,14 @@ const HomePage = ({
   const onlineUsersQueryResult = useFirestoreCollectionData(onlineUsersQuery);
 
   return (
-    <div title='Sign Out'>
+    <div className='h-full w-full background-grey' title='Sign Out'>
       {user && <div>{`Hello, ${user.displayName}`}</div>}
-      <button onClick={() => signOut(auth)}>Sign out</button>
+      <button
+        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        onClick={() => signOut(auth)}
+      >
+        Sign out
+      </button>
       {(onlineUsersQueryResult?.data ?? []).map((d, index) => (
         <div key={index}>{d.userName}</div>
       ))}
