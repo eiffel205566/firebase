@@ -22,7 +22,7 @@ const HomePage = ({
   const onlineUsersQueryResult = useFirestoreCollectionData(onlineUsersQuery);
 
   return (
-    <div className='h-full w-full background-grey' title='Sign Out'>
+    <div className='homePageContainer h-full w-full' title='Sign Out'>
       {user && <div>{`Hello, ${user.displayName}`}</div>}
       <button
         className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
