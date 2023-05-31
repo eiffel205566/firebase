@@ -1,12 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import {
-  useSigninCheck,
-  SigninCheckResult,
-  useFirestore,
-  useFirebaseApp,
-  useDatabase,
-  useDatabaseObjectData,
-} from "reactfire";
+import { useSigninCheck, SigninCheckResult, useFirestore } from "reactfire";
 import { GoogleAuthProvider, User, signInWithPopup } from "firebase/auth";
 import {
   collection,
@@ -14,17 +7,10 @@ import {
   where,
   getDocs,
   setDoc,
-  deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { query, ref, set, increment as rtdbIncrement } from "firebase/database";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useBeforeUnload,
-} from "react-router-dom";
+import { query } from "firebase/database";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "../pages/HomePage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
