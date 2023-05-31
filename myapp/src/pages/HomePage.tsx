@@ -36,12 +36,16 @@ const HomePage = ({
           <div>Online Users</div>
           <br />
           {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-            const className =
-              d.status === "online" ? "text-white" : "text-slate-300";
+            const className = `hover:text-green-300 cursor-pointer ${
+              d.status === "online" ? "text-white" : "text-slate-300"
+            }`;
+
             return (
-              <div className={className} key={index}>
-                {d.userName}
-              </div>
+              user.uid !== d.uid && (
+                <div className={className} key={index}>
+                  {d.userName}
+                </div>
+              )
             );
           })}
         </div>
