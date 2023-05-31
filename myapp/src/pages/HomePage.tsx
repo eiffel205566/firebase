@@ -23,7 +23,7 @@ const HomePage = ({
   }>(onlineUsersQuery);
 
   return (
-    <div className='homePageContainer h-full w-full flex' title='Sign Out'>
+    <div className='homePageContainer min-h-[100vh] w-full flex'>
       <div className='modalContainer w-[200px] bg-gray-800'>
         {user && <div>{`Hello, ${user.displayName}`}</div>}
         <button

@@ -69,7 +69,7 @@ export const AppContent = () => {
           element={
             <ProtectedRoute user={signInCheckResult?.user} status={status}>
               <HomePage
-                user={signInCheckResult.user as User}
+                user={signInCheckResult?.user as User} // undefined user will be handled by ProtectedRoute
                 signOut={logout}
               />
             </ProtectedRoute>

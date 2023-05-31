@@ -1,26 +1,52 @@
 import { User } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { query } from "firebase/database";
+import { collection, doc, orderBy, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { useFirestore } from "reactfire";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
 
 const MainChat = ({ user }: { user: User }) => {
   const firestore = useFirestore();
   const publicMessagesRef = collection(firestore, "publicMessages");
+  const publicMessagesQueryResult = useFirestoreCollectionData<{
+    uid: string;
+    message: string;
+    timestamp: number;
+    userName: string;
+  }>(query(publicMessagesRef, orderBy("timestamp", "asc")));
+  const { status, data } = publicMessagesQueryResult;
 
   const [message, setMessage] = useState<string>("");
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await setDoc(doc(publicMessagesRef, user.uid), {
+    await setDoc(doc(publicMessagesRef), {
       uid: user.uid,
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
       message,
+      userName: user.displayName ?? "",
     });
     setMessage("");
   };
 
   return (
-    <div className='chatContainer relative bg-gray-500 flex-grow'>
+    <div className='chatContainer relative bg-gray-500 w-full px-[100px] py-[50px]'>
+      {(data ?? []).map(d => {
+        const splittedName = (d.userName ?? "").split(" ");
+        const firstLetter = splittedName[0]?.[0] ?? "";
+        const secondLetter = splittedName?.[1]?.[0] ?? "";
+
+        return (
+          <div key={d.timestamp} className='singleMessageContainer flex mb-4'>
+            <div className='pr-10'>
+              <UserIcon
+                isMe={d.uid === user.uid}
+                name={{ firstLetter, secondLetter }}
+              />
+            </div>
+            <div className='h-fit'>{d.message}</div>
+          </div>
+        );
+      })}
       <div className='absolute bottom-[10%] left-[50%] bg-gray-600'>
         <form onSubmit={handleSubmit}>
           <div>
@@ -45,3 +71,23 @@ const MainChat = ({ user }: { user: User }) => {
 };
 
 export default MainChat;
+
+const UserIcon = ({
+  isMe,
+  name,
+}: {
+  isMe: boolean;
+  name: { firstLetter: string; secondLetter: string };
+}) => {
+  const finalName = isMe
+    ? "Me"
+    : `${name.firstLetter ?? ""}${
+        name.secondLetter ? ` ${name.secondLetter}` : ""
+      }`;
+
+  return (
+    <div className='h-[30px] w-[30px] rounded-full bg-gray-700 flex items-center justify-center'>
+      <span className='text-white text-[10px] font-bold'>{finalName}</span>
+    </div>
+  );
+};
