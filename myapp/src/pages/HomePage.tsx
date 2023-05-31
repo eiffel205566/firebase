@@ -25,24 +25,26 @@ const HomePage = ({
   return (
     <div className='homePageContainer min-h-[100vh] w-full flex'>
       <div className='modalContainer w-[200px] bg-gray-800'>
-        {user && <div>{`Hello, ${user.displayName}`}</div>}
-        <button
-          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-          onClick={() => signOut(auth)}
-        >
-          Sign out
-        </button>
-        <div>Online Users</div>
-        <br />
-        {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-          const className =
-            d.status === "online" ? "text-white" : "text-slate-300";
-          return (
-            <div className={className} key={index}>
-              {d.userName}
-            </div>
-          );
-        })}
+        <div className='fixed top-0'>
+          {user && <div>{`Hello, ${user.displayName}`}</div>}
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            onClick={() => signOut(auth)}
+          >
+            Sign out
+          </button>
+          <div>Online Users</div>
+          <br />
+          {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
+            const className =
+              d.status === "online" ? "text-white" : "text-slate-300";
+            return (
+              <div className={className} key={index}>
+                {d.userName}
+              </div>
+            );
+          })}
+        </div>
       </div>
       <MainChat user={user} />
     </div>
