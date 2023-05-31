@@ -39,9 +39,13 @@ const HomePage = ({
         <div>Online Users</div>
         <br />
         {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-          return d.status === "online" ? (
-            <div key={index}>{d.userName}</div>
-          ) : null;
+          const className =
+            d.status === "online" ? "text-white" : "text-slate-300";
+          return (
+            <div className={className} key={index}>
+              {d.userName}
+            </div>
+          );
         })}
       </div>
       <MainChat />
