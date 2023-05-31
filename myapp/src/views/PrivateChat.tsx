@@ -28,7 +28,7 @@ const PrivateChat = ({
   const privateMessagesRef = collection(firestore, "privateMessages");
   const privateMessagesQueryResult = useFirestoreCollectionData<{
     NO_ID_FIELD: string;
-    messages: Array<{ message: string; timestamp: number }>;
+    messages: Array<{ message: string; timestamp: number; uid: string }>;
     participants: string[];
   }>(
     query(
@@ -82,23 +82,29 @@ const PrivateChat = ({
 
   return (
     <div className='chatContainer relative bg-gray-500 w-full px-[100px] py-[50px]'>
-      {/* {(data ?? []).map(d => {
-        const splittedName = (d.userName ?? "").split(" ");
+      {currentMessages.map(message => {
+        const personName =
+          message.uid === user.uid ? user.displayName : otherName;
+
+        const splittedName = (personName ?? "").split(" ");
         const firstLetter = splittedName[0]?.[0] ?? "";
         const secondLetter = splittedName?.[1]?.[0] ?? "";
 
         return (
-          <div key={d.timestamp} className='singleMessageContainer flex mb-4'>
+          <div
+            key={message.timestamp}
+            className='singleMessageContainer flex mb-4'
+          >
             <div className='pr-10'>
               <UserIcon
-                isMe={d.uid === user.uid}
+                isMe={message.uid === user.uid}
                 name={{ firstLetter, secondLetter }}
               />
             </div>
-            <div className='h-fit'>{d.message}</div>
+            <div className='h-fit'>{message.message}</div>
           </div>
         );
-      })} */}
+      })}
       <div className='absolute bottom-[10%] left-[50%] bg-gray-600'>
         <form onSubmit={handleSubmit}>
           <div>
