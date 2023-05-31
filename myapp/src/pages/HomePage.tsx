@@ -40,8 +40,15 @@ const HomePage = ({
           >
             Sign out
           </button>
-          <div>Online Users</div>
+          <div
+            className='text-white hover:text-green-300 cursor-pointer'
+            onClick={() => navigate("/home")}
+          >
+            Back to Public Room
+          </div>
           <br />
+
+          <div>Chat With:</div>
           {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
             const className = `hover:text-green-300 cursor-pointer ${
               d.status === "online" ? "text-white" : "text-slate-300"
