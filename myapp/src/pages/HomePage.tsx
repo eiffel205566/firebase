@@ -1,19 +1,15 @@
 import React from "react";
 import { query } from "firebase/database";
-import {
-  useAuth,
-  SigninCheckResult,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire";
+import { useAuth, useFirestore, useFirestoreCollectionData } from "reactfire";
 import { collection } from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
+import { User } from "firebase/auth";
 
 const HomePage = ({
   user,
   signOut,
 }: {
-  user?: SigninCheckResult["user"];
+  user: User;
   signOut: (auth: ReturnType<typeof useAuth>) => void;
 }): React.ReactElement => {
   const auth = useAuth();
@@ -48,7 +44,7 @@ const HomePage = ({
           );
         })}
       </div>
-      <MainChat />
+      <MainChat user={user} />
     </div>
   );
 };

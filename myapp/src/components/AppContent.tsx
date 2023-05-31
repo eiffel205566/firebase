@@ -7,7 +7,7 @@ import {
   useDatabase,
   useDatabaseObjectData,
 } from "reactfire";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, User, signInWithPopup } from "firebase/auth";
 import {
   collection,
   doc,
@@ -41,10 +41,7 @@ export const AppContent = () => {
     (async () => {
       if (!signInCheckResult?.user) return;
 
-      const userQuery = query(
-        collection(firestore, "onlineUsers"),
-        where("uid", "==", uid ?? "")
-      );
+      const userQuery = query(onlineUsersRef, where("uid", "==", uid ?? ""));
       const userQuerySnapshot = await getDocs(userQuery);
 
       if (!userQuerySnapshot.empty) {
@@ -85,7 +82,10 @@ export const AppContent = () => {
           path='/home'
           element={
             <ProtectedRoute user={signInCheckResult?.user} status={status}>
-              <HomePage user={signInCheckResult?.user} signOut={logout} />
+              <HomePage
+                user={signInCheckResult.user as User}
+                signOut={logout}
+              />
             </ProtectedRoute>
           }
         />
