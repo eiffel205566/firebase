@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { query } from "firebase/database";
 import { useAuth, useFirestore, useFirestoreCollectionData } from "reactfire";
 import { collection } from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
+import PrivateChat from "../views/PrivateChat.tsx";
 
 const HomePage = ({
   user,
@@ -12,6 +14,8 @@ const HomePage = ({
   user: User;
   signOut: (auth: ReturnType<typeof useAuth>) => void;
 }): React.ReactElement => {
+  const navigate = useNavigate();
+  const { uid: otherUid } = useParams();
   const auth = useAuth();
   const firestore = useFirestore();
   const onlineUsersRef = collection(firestore, "onlineUsers");
@@ -42,7 +46,11 @@ const HomePage = ({
 
             return (
               user.uid !== d.uid && (
-                <div className={className} key={index}>
+                <div
+                  onClick={() => navigate(`/home/${d.uid}`)}
+                  className={className}
+                  key={index}
+                >
                   {d.userName}
                 </div>
               )
@@ -50,7 +58,7 @@ const HomePage = ({
           })}
         </div>
       </div>
-      <MainChat user={user} />
+      {otherUid ? <PrivateChat user={user} /> : <MainChat user={user} />}
     </div>
   );
 };

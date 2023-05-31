@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import UserIcon from "./UserIcon.tsx";
 
-const MainChat = ({ user }: { user: User }) => {
+const PrivateChat = ({ user }: { user: User }) => {
   const firestore = useFirestore();
   const publicMessagesRef = collection(firestore, "publicMessages");
   const publicMessagesQueryResult = useFirestoreCollectionData<{
@@ -48,27 +48,8 @@ const MainChat = ({ user }: { user: User }) => {
           </div>
         );
       })}
-      <div className='absolute bottom-[10%] left-[50%] bg-gray-600'>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='message'>Message:</label>
-            <textarea
-              className='text-gray-700'
-              id='message'
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-            />
-          </div>
-          <button
-            className='hover:bg-gray-700 text-white py-2 px-4 rounded'
-            type='submit'
-          >
-            Submit
-          </button>
-        </form>
-      </div>
     </div>
   );
 };
 
-export default MainChat;
+export default PrivateChat;

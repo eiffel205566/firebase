@@ -64,17 +64,20 @@ export const AppContent = () => {
           path='/'
           element={<LoginPage user={signInCheckResult?.user} status={status} />}
         />
-        <Route
-          path='/home'
-          element={
-            <ProtectedRoute user={signInCheckResult?.user} status={status}>
-              <HomePage
-                user={signInCheckResult?.user as User} // undefined user will be handled by ProtectedRoute
-                signOut={logout}
-              />
-            </ProtectedRoute>
-          }
-        />
+        {["/home", "/home/:uid"].map(path => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <ProtectedRoute user={signInCheckResult?.user} status={status}>
+                <HomePage
+                  user={signInCheckResult?.user as User} // undefined user will be handled by ProtectedRoute
+                  signOut={logout}
+                />
+              </ProtectedRoute>
+            }
+          />
+        ))}
       </Routes>
     </BrowserRouter>
   );
