@@ -24,7 +24,7 @@ const HomePage = ({
 
   return (
     <div className='homePageContainer min-h-[100vh] w-full flex'>
-      <div className='modalContainer w-[200px] bg-gray-800 p-4'>
+      <div className='modalContainer min-w-[200px] bg-gray-800 p-4'>
         <div className='fixed top-0'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
           <button
