@@ -25,6 +25,9 @@ const HomePage = ({
     userName: string;
     status: "online" | "offline";
   }>(onlineUsersQuery);
+  const otherName = (onlineUsersQueryResult?.data ?? []).find(
+    d => d.uid === otherUid
+  )?.userName;
 
   return (
     <div className='homePageContainer min-h-[100vh] w-full flex'>
@@ -58,7 +61,11 @@ const HomePage = ({
           })}
         </div>
       </div>
-      {otherUid ? <PrivateChat user={user} /> : <MainChat user={user} />}
+      {otherUid && otherName ? (
+        <PrivateChat user={user} otherUid={otherUid} otherName={otherName} />
+      ) : (
+        <MainChat user={user} />
+      )}
     </div>
   );
 };
