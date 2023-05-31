@@ -3,11 +3,9 @@ import { query } from "firebase/database";
 import {
   collection,
   doc,
-  orderBy,
   setDoc,
   where,
   or,
-  and,
   updateDoc,
 } from "firebase/firestore";
 import React, { useState } from "react";
@@ -73,8 +71,6 @@ const PrivateChat = ({
     }
     setMessage("");
   };
-
-  console.log(privateMessagesQueryResult);
 
   const buttonClass = `hover:bg-gray-700 text-white py-2 px-4 rounded ${
     isSubmitDisabled ? "cursor-not-allowed" : ""
