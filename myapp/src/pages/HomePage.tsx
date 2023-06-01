@@ -6,6 +6,8 @@ import { collection } from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
+import "./HomePage.css";
+import Panel from "../views/Panel.tsx";
 
 const HomePage = ({
   user,
@@ -30,12 +32,12 @@ const HomePage = ({
   )?.userName;
 
   return (
-    <div className='homePageContainer min-h-[100vh] w-full flex'>
-      <div className='modalContainer min-w-[200px] bg-gray-800 p-4'>
-        <div className='fixed top-0'>
+    <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
+      <div className='modalContainer min-w-[200px] bg-gray-800'>
+        <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
           <button
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            className='hover:bg-blue-700 text-white py-2 px-4 rounded'
             onClick={() => signOut(auth)}
           >
             Sign out
@@ -52,7 +54,7 @@ const HomePage = ({
 
           <div>Chat With:</div>
           {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-            const className = `hover:text-green-300 cursor-pointer ${
+            const className = `max-w-[150px] truncate hover:text-green-300 cursor-pointer ${
               d.status === "online" ? "text-white" : "text-slate-300"
             }`;
 
