@@ -1,8 +1,9 @@
 import React from "react";
+import "./MessageSubmission.css";
 
 const MessageSubmission = ({ onSubmit, message, onChange }) => {
   return (
-    <div style={{ width: "-webkit-fill-available" }} className='fixed bottom-0'>
+    <div className='messageSubmission fixed bottom-0'>
       <div className='bg-gray-600'>
         <form onSubmit={onSubmit}>
           <div

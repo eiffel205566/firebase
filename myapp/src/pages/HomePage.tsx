@@ -36,7 +36,7 @@ const HomePage = ({
         <div className='fixed top-0'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
           <button
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            className='hover:bg-blue-700 text-white py-2 px-4 rounded'
             onClick={() => signOut(auth)}
           >
             Sign out
