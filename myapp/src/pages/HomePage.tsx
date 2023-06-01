@@ -7,6 +7,7 @@ import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
 import "./HomePage.css";
+import Panel from "../views/Panel.tsx";
 
 const HomePage = ({
   user,
@@ -32,8 +33,8 @@ const HomePage = ({
 
   return (
     <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
-      <div className='modalContainer min-w-[200px] bg-gray-800 p-4'>
-        <div className='fixed top-0'>
+      <div className='modalContainer min-w-[200px] bg-gray-800'>
+        <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
           <button
             className='hover:bg-blue-700 text-white py-2 px-4 rounded'
