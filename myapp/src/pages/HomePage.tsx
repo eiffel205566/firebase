@@ -40,12 +40,14 @@ const HomePage = ({
           >
             Sign out
           </button>
-          <div
-            className='text-white hover:text-green-300 cursor-pointer'
-            onClick={() => navigate("/home")}
-          >
-            Back to Public Room
-          </div>
+          {otherUid != null && (
+            <div
+              className='text-white hover:text-green-300 cursor-pointer'
+              onClick={() => navigate("/home")}
+            >
+              Back to Public Room
+            </div>
+          )}
           <br />
 
           <div>Chat With:</div>
