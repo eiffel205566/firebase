@@ -74,7 +74,7 @@ const PrivateChat = ({
 
   return (
     <div className='chatContainer relative bg-gray-600 w-full pb-[50px]'>
-      {currentMessages.map(message => {
+      {currentMessages.map((message, index) => {
         const personName =
           message.uid === user.uid ? user.displayName : otherName;
 
@@ -83,7 +83,7 @@ const PrivateChat = ({
         const secondLetter = splittedName?.[1]?.[0] ?? "";
         const isMe = message.uid === user.uid;
         const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
-          isMe ? "600" : "700"
+          index % 2 === 0 ? "600" : "700"
         } px-[100px]`;
 
         return (
@@ -102,6 +102,7 @@ const PrivateChat = ({
         onSubmit={handleSubmit}
         onChange={e => setMessage(e.target.value)}
         message={message}
+        otherName={otherName}
       />
     </div>
   );

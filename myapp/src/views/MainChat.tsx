@@ -33,13 +33,13 @@ const MainChat = ({ user }: { user: User }) => {
   return (
     <>
       <div className='chatContainer relative bg-gray-600 w-full pb-[50px]'>
-        {(data ?? []).map(d => {
+        {(data ?? []).map((d, index) => {
           const splittedName = (d.userName ?? "").split(" ");
           const firstLetter = splittedName[0]?.[0] ?? "";
           const secondLetter = splittedName?.[1]?.[0] ?? "";
           const isMe = d.uid === user.uid;
           const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
-            isMe ? "600" : "700"
+            index % 2 === 0 ? "600" : "700"
           } px-[100px]`;
 
           return (
@@ -58,6 +58,7 @@ const MainChat = ({ user }: { user: User }) => {
           onSubmit={handleSubmit}
           onChange={e => setMessage(e.target.value)}
           message={message}
+          otherName='Everyone'
         />
       </div>
     </>
