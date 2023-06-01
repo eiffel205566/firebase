@@ -42,13 +42,13 @@ const PrivateChat = ({
   const chatId = (data ?? [])[0]?.NO_ID_FIELD;
   const currentMessages = (data ?? [])[0]?.messages ?? [];
   const isSubmitDisabled =
-    status === "loading" || message === "" || message == null || chatId == null;
+    status === "loading" || message === "" || message == null;
 
   const handleSubmit = async e => {
+    e.preventDefault();
     if (isSubmitDisabled) {
       return;
     }
-    e.preventDefault();
 
     if (!chatId) {
       await setDoc(doc(privateMessagesRef), {
