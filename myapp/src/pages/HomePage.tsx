@@ -18,6 +18,7 @@ import Exit from "../views/Exit.tsx";
 import BurgerMenu from "../views/BurgerMenu.tsx";
 import SlideIn from "../views/SlideIn.tsx";
 import Chevron from "../views/Chevron.tsx";
+import RoomChat from "../views/RoomChat.tsx";
 
 const HomePage = ({
   user,
@@ -179,7 +180,10 @@ const HomePage = ({
             </button>
           </div>
         </div>
-        {otherUid && otherName ? (
+        {/* // TODO: going forward definitely do not use HomePage to manage following */}
+        {roomId ? (
+          <RoomChat user={user} otherUid='aaa' otherName='xxx' />
+        ) : otherUid && otherName ? (
           <PrivateChat user={user} otherUid={otherUid} otherName={otherName} />
         ) : (
           <MainChat user={user} />
