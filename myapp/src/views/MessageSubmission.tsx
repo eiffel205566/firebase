@@ -6,7 +6,7 @@ const MessageSubmission = ({ onSubmit, message, onChange }) => {
       <div className='bg-gray-600'>
         <form onSubmit={onSubmit}>
           <div
-            style={{ boxShadow: "0px -32px 30px -4px rgba(75,85,99,1)" }}
+            style={{ boxShadow: "-1px -39px 30px -22px rgba(75,85,99,1)" }}
             className='flex justify-center py-4 box-shadow-custom'
           >
             <textarea
