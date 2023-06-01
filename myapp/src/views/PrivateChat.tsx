@@ -102,6 +102,7 @@ const PrivateChat = ({
         onSubmit={handleSubmit}
         onChange={e => setMessage(e.target.value)}
         message={message}
+        otherName={otherName}
       />
     </div>
   );

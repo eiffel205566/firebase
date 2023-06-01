@@ -58,6 +58,7 @@ const MainChat = ({ user }: { user: User }) => {
           onSubmit={handleSubmit}
           onChange={e => setMessage(e.target.value)}
           message={message}
+          otherName='Everyone'
         />
       </div>
     </>

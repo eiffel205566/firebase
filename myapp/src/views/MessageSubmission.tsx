@@ -1,8 +1,18 @@
-import React from "react";
+import React, { ChangeEventHandler, FormEvent } from "react";
 import "./MessageSubmission.css";
 import Chevron from "./Chevron.tsx";
 
-const MessageSubmission = ({ onSubmit, message, onChange }) => {
+const MessageSubmission = ({
+  onSubmit,
+  message,
+  onChange,
+  otherName,
+}: {
+  onSubmit: (e: FormEvent) => void;
+  message: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  otherName?: string;
+}) => {
   return (
     <div className='messageSubmission fixed bottom-0'>
       <div className='bg-gray-600'>
@@ -21,12 +31,17 @@ const MessageSubmission = ({ onSubmit, message, onChange }) => {
                 element.style.height = "auto";
                 element.style.height = `${element.scrollHeight}px`;
               }}
+              placeholder={`Chatting with ${otherName ?? "Others"}`}
             />
-            {message && (
-              <button className='focus:outline-none'>
-                <Chevron className='fill-stone-100 cursor-pointer hover:fill-green-300' />
-              </button>
-            )}
+            <button className='focus:outline-none'>
+              <Chevron
+                className={`fill-stone-100 cursor-pointer hover:fill-green-300 translate-x-[-30px] ${
+                  message ? "" : "fill-transparent"
+                }`}
+                width={24}
+                height={24}
+              />
+            </button>
           </div>
         </form>
       </div>
