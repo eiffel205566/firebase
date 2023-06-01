@@ -72,9 +72,6 @@ const HomePage = ({
         <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
           <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
             {user && <div>{`Hello, ${user.displayName}`}</div>}
-            <div className='cursor-pointer' onClick={() => console.log(111)}>
-              click
-            </div>
 
             {otherUid != null && (
               <div
