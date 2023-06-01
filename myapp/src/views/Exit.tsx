@@ -18,7 +18,6 @@ const Exit = ({
       id='Layer_1'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 512 512'
-      enable-background='new 0 0 512 512'
     >
       <path
         d='M469.3,469.3H42.7V42.7H256L298.7,0h-256C19.1,0,0,19.1,0,42.7v426.7C0,492.9,19.1,512,42.7,512h426.7
