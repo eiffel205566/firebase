@@ -35,14 +35,38 @@ const HomePage = ({
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const renderUser = () =>
+    (onlineUsersQueryResult?.data ?? []).map(d => {
+      const className = `max-w-[150px] truncate hover:text-green-300 cursor-pointer ${
+        d.status === "online" ? "text-white" : "text-slate-300"
+      }`;
+
+      return (
+        user.uid !== d.uid && (
+          <div
+            onClick={() => navigate(`/home/${d.uid}`)}
+            className={className}
+            key={d.uid}
+          >
+            {d.userName}
+          </div>
+        )
+      );
+    });
+
   return (
     <>
       <BurgerMenu isOpen={isOpen} onClick={setIsOpen} />
       <SlideIn isOpen={isOpen}>
-        <div>xxxx</div>
-        <div>xxxx</div>
-        <div>xxxx</div>
-        <div>xxxx</div>
+        {
+          <div className='flex flex-col gap-2 p-1'>
+            Chat With:
+            {renderUser()}
+            <div className='flex flex-col justify-center cursor-pointer'>
+              <Exit className='fill-red-300 hover:fill-red-600' />
+            </div>
+          </div>
+        }
       </SlideIn>
       <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
         <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
@@ -60,23 +84,7 @@ const HomePage = ({
             <br />
 
             <div>Chat With:</div>
-            {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-              const className = `max-w-[150px] truncate hover:text-green-300 cursor-pointer ${
-                d.status === "online" ? "text-white" : "text-slate-300"
-              }`;
-
-              return (
-                user.uid !== d.uid && (
-                  <div
-                    onClick={() => navigate(`/home/${d.uid}`)}
-                    className={className}
-                    key={d.uid}
-                  >
-                    {d.userName}
-                  </div>
-                )
-              );
-            })}
+            {renderUser()}
           </div>
 
           <div className='fixed bottom-0 w-full flex z-2 bg-gray-800 px-4 gap-2 hover:cursor-pointer'>
