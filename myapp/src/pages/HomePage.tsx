@@ -7,7 +7,7 @@ import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
 import "./HomePage.css";
-import Panel from "../views/Panel.tsx";
+import Exit from "../views/Exist.tsx";
 
 const HomePage = ({
   user,
@@ -36,12 +36,7 @@ const HomePage = ({
       <div className='modalContainer min-w-[200px] bg-gray-800'>
         <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
-          <button
-            className='hover:bg-blue-700 text-white py-2 px-4 rounded'
-            onClick={() => signOut(auth)}
-          >
-            Sign out
-          </button>
+
           {otherUid != null && (
             <div
               className='text-white hover:text-green-300 cursor-pointer'
@@ -70,6 +65,18 @@ const HomePage = ({
               )
             );
           })}
+        </div>
+
+        <div className='fixed bottom-0 w-full flex z-2 bg-gray-800 px-4'>
+          <div className='flex flex-col justify-center'>
+            <Exit className='fill-red-300' />
+          </div>
+          <button
+            className='hover:text-red-300 text-white py-2 px-4 rounded'
+            onClick={() => signOut(auth)}
+          >
+            Sign out
+          </button>
         </div>
       </div>
       {otherUid && otherName ? (
