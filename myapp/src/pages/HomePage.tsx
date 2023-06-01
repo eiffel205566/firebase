@@ -33,7 +33,7 @@ const HomePage = ({
 
   return (
     <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
-      <div className='modalContainer min-w-[200px] bg-gray-800'>
+      <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
         <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
 
@@ -67,12 +67,12 @@ const HomePage = ({
           })}
         </div>
 
-        <div className='fixed bottom-0 w-full flex z-2 bg-gray-800 px-4'>
+        <div className='fixed bottom-0 w-full flex z-2 bg-gray-800 px-4 gap-2 hover:cursor-pointer'>
           <div className='flex flex-col justify-center'>
             <Exit className='fill-red-300' />
           </div>
           <button
-            className='hover:text-red-300 text-white py-2 px-4 rounded'
+            className='hover:text-red-300 text-white py-2 rounded'
             onClick={() => signOut(auth)}
           >
             Sign out
