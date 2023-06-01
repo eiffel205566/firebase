@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import UserIcon from "./UserIcon.tsx";
+import MessageSubmission from "./MessageSubmission.tsx";
 
 const PrivateChat = ({
   user,
@@ -72,10 +73,6 @@ const PrivateChat = ({
     setMessage("");
   };
 
-  const buttonClass = `hover:bg-gray-700 text-white py-2 px-4 rounded ${
-    isSubmitDisabled ? "cursor-not-allowed" : ""
-  }`;
-
   return (
     <div className='chatContainer relative bg-gray-500 w-full px-[100px] py-[50px]'>
       {currentMessages.map(message => {
@@ -101,26 +98,11 @@ const PrivateChat = ({
           </div>
         );
       })}
-      <div className='absolute bottom-[10%] left-[50%] bg-gray-600'>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='message'>Message:</label>
-            <textarea
-              className='text-gray-700'
-              id='message'
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-            />
-          </div>
-          <button
-            className={buttonClass}
-            type='submit'
-            disabled={isSubmitDisabled}
-          >
-            Private Message Submit
-          </button>
-        </form>
-      </div>
+      <MessageSubmission
+        onSubmit={handleSubmit}
+        onChange={e => setMessage(e.target.value)}
+        message={message}
+      />
     </div>
   );
 };

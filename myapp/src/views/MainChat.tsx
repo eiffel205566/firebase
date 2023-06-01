@@ -4,6 +4,7 @@ import { collection, doc, orderBy, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import UserIcon from "./UserIcon.tsx";
+import MessageSubmission from "./MessageSubmission.tsx";
 
 const MainChat = ({ user }: { user: User }) => {
   const firestore = useFirestore();
@@ -30,45 +31,35 @@ const MainChat = ({ user }: { user: User }) => {
   };
 
   return (
-    <div className='chatContainer relative bg-gray-500 w-full px-[100px] py-[50px]'>
-      {(data ?? []).map(d => {
-        const splittedName = (d.userName ?? "").split(" ");
-        const firstLetter = splittedName[0]?.[0] ?? "";
-        const secondLetter = splittedName?.[1]?.[0] ?? "";
+    <>
+      <div className='chatContainer relative bg-gray-600 w-full py-[50px]'>
+        {(data ?? []).map(d => {
+          const splittedName = (d.userName ?? "").split(" ");
+          const firstLetter = splittedName[0]?.[0] ?? "";
+          const secondLetter = splittedName?.[1]?.[0] ?? "";
 
-        return (
-          <div key={d.timestamp} className='singleMessageContainer flex mb-4'>
-            <div className='pr-10'>
-              <UserIcon
-                isMe={d.uid === user.uid}
-                name={{ firstLetter, secondLetter }}
-              />
+          return (
+            <div
+              key={d.timestamp}
+              className='singleMessageContainer flex mb-4 px-[100px]'
+            >
+              <div className='pr-10'>
+                <UserIcon
+                  isMe={d.uid === user.uid}
+                  name={{ firstLetter, secondLetter }}
+                />
+              </div>
+              <div className='h-fit'>{d.message}</div>
             </div>
-            <div className='h-fit'>{d.message}</div>
-          </div>
-        );
-      })}
-      <div className='absolute bottom-[10%] left-[50%] bg-gray-600'>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='message'>Message:</label>
-            <textarea
-              className='text-gray-700'
-              id='message'
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-            />
-          </div>
-          <button
-            className='hover:bg-gray-700 text-white py-2 px-4 rounded'
-            type='submit'
-            disabled={message === "" || message == null}
-          >
-            Submit
-          </button>
-        </form>
+          );
+        })}
+        <MessageSubmission
+          onSubmit={handleSubmit}
+          onChange={e => setMessage(e.target.value)}
+          message={message}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
