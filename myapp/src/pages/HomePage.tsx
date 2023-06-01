@@ -52,7 +52,7 @@ const HomePage = ({
 
           <div>Chat With:</div>
           {(onlineUsersQueryResult?.data ?? []).map((d, index) => {
-            const className = `hover:text-green-300 cursor-pointer ${
+            const className = `max-w-[150px] truncate hover:text-green-300 cursor-pointer ${
               d.status === "online" ? "text-white" : "text-slate-300"
             }`;
 
