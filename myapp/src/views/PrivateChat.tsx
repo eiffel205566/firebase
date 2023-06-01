@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
-import UserIcon from "./UserIcon.tsx";
+import { SingleLine } from "./UserIcon.tsx";
 import MessageSubmission from "./MessageSubmission.tsx";
 
 const PrivateChat = ({
@@ -88,23 +88,14 @@ const PrivateChat = ({
         } px-[100px]`;
 
         return (
-          <div key={message.timestamp} className={singleMessageClass}>
-            <div className='pr-10'>
-              <UserIcon
-                isPlaceholder={isMe}
-                isMe={message.uid === user.uid}
-                name={{ firstLetter, secondLetter }}
-              />
-            </div>
-            <div className='h-fit'>{message.message}</div>
-            <div className='pl-10 ml-auto'>
-              <UserIcon
-                isMe={message.uid === user.uid}
-                name={{ firstLetter, secondLetter }}
-                isPlaceholder={!isMe}
-              />
-            </div>
-          </div>
+          <SingleLine
+            key={message.timestamp}
+            className={singleMessageClass}
+            isMe={isMe}
+            firstLetter={firstLetter}
+            secondLetter={secondLetter}
+            message={message.message}
+          />
         );
       })}
       <div className='bottomBar w-full h-[100px]' />

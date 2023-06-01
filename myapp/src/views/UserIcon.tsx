@@ -27,4 +27,38 @@ const UserIcon = ({
   );
 };
 
+export const SingleLine = ({
+  className,
+  isMe,
+  firstLetter,
+  secondLetter,
+  message,
+}: {
+  className: string;
+  isMe: boolean;
+  firstLetter: string;
+  secondLetter: string;
+  message: string;
+}) => {
+  return (
+    <div className={className}>
+      <div className='pr-10'>
+        <UserIcon
+          isPlaceholder={isMe}
+          isMe={isMe}
+          name={{ firstLetter, secondLetter }}
+        />
+      </div>
+      <div className='h-fit'>{message}</div>
+      <div className='pl-10 ml-auto'>
+        <UserIcon
+          isMe={isMe}
+          name={{ firstLetter, secondLetter }}
+          isPlaceholder={!isMe}
+        />
+      </div>
+    </div>
+  );
+};
+
 export default UserIcon;

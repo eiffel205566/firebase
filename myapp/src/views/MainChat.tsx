@@ -3,7 +3,7 @@ import { query } from "firebase/database";
 import { collection, doc, orderBy, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
-import UserIcon from "./UserIcon.tsx";
+import { SingleLine } from "./UserIcon.tsx";
 import MessageSubmission from "./MessageSubmission.tsx";
 
 const MainChat = ({ user }: { user: User }) => {
@@ -43,23 +43,14 @@ const MainChat = ({ user }: { user: User }) => {
           } px-[100px]`;
 
           return (
-            <div key={d.timestamp} className={singleMessageClass}>
-              <div className='pr-10'>
-                <UserIcon
-                  isPlaceholder={isMe}
-                  isMe={d.uid === user.uid}
-                  name={{ firstLetter, secondLetter }}
-                />
-              </div>
-              <div className='h-fit'>{d.message}</div>
-              <div className='pl-10 ml-auto'>
-                <UserIcon
-                  isMe={d.uid === user.uid}
-                  name={{ firstLetter, secondLetter }}
-                  isPlaceholder={!isMe}
-                />
-              </div>
-            </div>
+            <SingleLine
+              key={d.timestamp}
+              className={singleMessageClass}
+              isMe={isMe}
+              firstLetter={firstLetter}
+              secondLetter={secondLetter}
+              message={d.message}
+            />
           );
         })}
         <div className='bottomBar w-full h-[100px]' />
