@@ -27,7 +27,7 @@ const HomePage = ({
   signOut: (auth: ReturnType<typeof useAuth>) => void;
 }): React.ReactElement => {
   const navigate = useNavigate();
-  const { uid: otherUid } = useParams();
+  const { uid: otherUid, roomId } = useParams();
   const auth = useAuth();
   const firestore = useFirestore();
   const onlineUsersRef = collection(firestore, "onlineUsers");
@@ -60,12 +60,15 @@ const HomePage = ({
       creatorId: user.uid,
       roomName: roomName,
     });
+    setIsAddRoom(false);
+    setRoomName("");
   };
 
   const [isOpen, setIsOpen] = useState(false);
   const [isAddRoom, setIsAddRoom] = useState(false);
   const [roomName, setRoomName] = useState("");
 
+  // TODO: remove console log!!!!
   console.log(roomName);
 
   const renderUser = () =>
@@ -151,8 +154,8 @@ const HomePage = ({
             Rooms:
             {(roomMessagesQueryResult.data ?? []).map(room => (
               <div
+                className='cursor-pointer hover:text-green-300'
                 onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
-                className={"xx"}
                 key={room.id}
               >
                 {room.roomName ?? room.NO_ID_FIELD}
