@@ -63,7 +63,6 @@ const PrivateChat = ({
       });
     } else {
       await updateDoc(doc(privateMessagesRef, chatId), {
-        ...data,
         messages: [
           ...currentMessages,
           { uid: user.uid, message, timestamp: Date.now() },
