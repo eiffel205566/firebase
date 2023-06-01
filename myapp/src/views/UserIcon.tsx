@@ -14,9 +14,12 @@ const UserIcon = ({
     : `${name.firstLetter ?? ""}${
         name.secondLetter ? ` ${name.secondLetter}` : ""
       }`;
+  const userClass = `h-[30px] w-[30px] rounded-full bg-gray-${
+    isMe ? "700" : "600"
+  } flex items-center justify-center`;
 
   return isPlaceholder ? (
-    <div className='h-[30px] w-[30px] rounded-full bg-gray-700 flex items-center justify-center'>
+    <div className={userClass}>
       <span className='text-white text-[10px] font-bold'>{finalName}</span>
     </div>
   ) : (
