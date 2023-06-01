@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { query } from "firebase/database";
 import { useAuth, useFirestore, useFirestoreCollectionData } from "reactfire";
-import { collection } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  where,
+  or,
+  updateDoc,
+} from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
@@ -10,6 +17,7 @@ import "./HomePage.css";
 import Exit from "../views/Exit.tsx";
 import BurgerMenu from "../views/BurgerMenu.tsx";
 import SlideIn from "../views/SlideIn.tsx";
+import Chevron from "../views/Chevron.tsx";
 
 const HomePage = ({
   user,
@@ -33,7 +41,32 @@ const HomePage = ({
     d => d.uid === otherUid
   )?.userName;
 
+  const roomMessagesRef = collection(firestore, "rooms");
+  const roomMessagesQuery = query(roomMessagesRef);
+  const roomMessagesQueryResult = useFirestoreCollectionData(roomMessagesQuery);
+  const roomQueryResult = useFirestoreCollectionData(
+    query(roomMessagesRef, where("creatorId", "==", user.uid))
+  );
+
+  // const userRoomQuery = useFirestoreCollectionData(
+  //   query(onlineUsersRef, and (
+  //     where("uid", "==", uid ?? "")
+  //     )
+  // )
+  const createRoom = async () => {
+    if (roomName == null || roomName === "") return;
+    await setDoc(doc(roomMessagesRef), {
+      messages: [],
+      creatorId: user.uid,
+      roomName: roomName,
+    });
+  };
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isAddRoom, setIsAddRoom] = useState(false);
+  const [roomName, setRoomName] = useState("");
+
+  console.log(roomName);
 
   const renderUser = () =>
     (onlineUsersQueryResult?.data ?? []).map(d => {
@@ -54,6 +87,7 @@ const HomePage = ({
       );
     });
 
+  // TODO: update the JSX
   return (
     <>
       <BurgerMenu isOpen={isOpen} onClick={setIsOpen} />
@@ -65,6 +99,12 @@ const HomePage = ({
             <div className='flex flex-col justify-center cursor-pointer'>
               <Exit className='fill-red-300 hover:fill-red-600' />
             </div>
+            <div
+              className='text-white hover:text-green-300 cursor-pointer'
+              onClick={() => navigate("/home")}
+            >
+              To Public Room
+            </div>
           </div>
         }
       </SlideIn>
@@ -72,7 +112,6 @@ const HomePage = ({
         <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
           <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
             {user && <div>{`Hello, ${user.displayName}`}</div>}
-
             {otherUid != null && (
               <div
                 className='text-white hover:text-green-300 cursor-pointer'
@@ -82,7 +121,45 @@ const HomePage = ({
               </div>
             )}
             <br />
-
+            <div
+              className='cursor-pointer hover:text-green-300'
+              onClick={() => setIsAddRoom(true)}
+            >
+              Create A Room
+            </div>
+            {isAddRoom && (
+              <div>
+                <input
+                  className='relative bg-gray-500 rounded-lg focus:outline-none p-1 overflow-y-hidden max-w-[150px]'
+                  onChange={e => {
+                    setRoomName(e.target.value);
+                    if (e.target.value == null || e.target.value === "") {
+                      setIsAddRoom(false);
+                    }
+                  }}
+                  value={roomName}
+                />
+                {roomName && (
+                  <Chevron
+                    onClick={createRoom}
+                    className='absolute cursor-pointer fill-green-300 hover:fill-green-500 translate-y-[-26px] translate-x-[120px]'
+                  />
+                )}
+              </div>
+            )}
+            <br />
+            Rooms:
+            {(roomMessagesQueryResult.data ?? []).map(room => (
+              <div
+                onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
+                className={"xx"}
+                key={room.id}
+              >
+                {room.roomName ?? room.NO_ID_FIELD}
+              </div>
+            ))}
+            <br />
+            <br />
             <div>Chat With:</div>
             {renderUser()}
           </div>
