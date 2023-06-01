@@ -64,7 +64,7 @@ export const AppContent = () => {
           path='/'
           element={<LoginPage user={signInCheckResult?.user} status={status} />}
         />
-        {["/home", "/home/:uid"].map(path => (
+        {["/home", "/private/:uid"].map(path => (
           <Route
             key={path}
             path={path}
