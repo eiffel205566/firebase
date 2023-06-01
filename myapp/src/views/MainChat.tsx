@@ -53,6 +53,7 @@ const MainChat = ({ user }: { user: User }) => {
             </div>
           );
         })}
+        <div className='bottomBar w-full h-[100px]' />
         <MessageSubmission
           onSubmit={handleSubmit}
           onChange={e => setMessage(e.target.value)}

@@ -74,7 +74,7 @@ const PrivateChat = ({
   };
 
   return (
-    <div className='chatContainer relative bg-gray-500 w-full px-[100px] py-[50px]'>
+    <div className='chatContainer relative bg-gray-600 w-full py-[50px]'>
       {currentMessages.map(message => {
         const personName =
           message.uid === user.uid ? user.displayName : otherName;
@@ -86,7 +86,7 @@ const PrivateChat = ({
         return (
           <div
             key={message.timestamp}
-            className='singleMessageContainer flex mb-4'
+            className='singleMessageContainer flex mb-4 px-[100px]'
           >
             <div className='pr-10'>
               <UserIcon
@@ -98,6 +98,7 @@ const PrivateChat = ({
           </div>
         );
       })}
+      <div className='bottomBar w-full h-[100px]' />
       <MessageSubmission
         onSubmit={handleSubmit}
         onChange={e => setMessage(e.target.value)}
