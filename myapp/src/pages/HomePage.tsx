@@ -9,6 +9,7 @@ import PrivateChat from "../views/PrivateChat.tsx";
 import "./HomePage.css";
 import Exit from "../views/Exit.tsx";
 import BurgerMenu from "../views/BurgerMenu.tsx";
+import SlideIn from "../views/SlideIn.tsx";
 
 const HomePage = ({
   user,
@@ -37,6 +38,12 @@ const HomePage = ({
   return (
     <>
       <BurgerMenu isOpen={isOpen} onClick={setIsOpen} />
+      <SlideIn isOpen={isOpen}>
+        <div>xxxx</div>
+        <div>xxxx</div>
+        <div>xxxx</div>
+        <div>xxxx</div>
+      </SlideIn>
       <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
         <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
           <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>

@@ -5,7 +5,7 @@
 }
 
 @media screen and (min-width: 800px) {
-  .burgerContainer {
+  .burgerContainer, .slideIn {
     display: none;
   }
 }
