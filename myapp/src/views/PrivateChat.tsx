@@ -82,19 +82,28 @@ const PrivateChat = ({
         const splittedName = (personName ?? "").split(" ");
         const firstLetter = splittedName[0]?.[0] ?? "";
         const secondLetter = splittedName?.[1]?.[0] ?? "";
+        const isMe = message.uid === user.uid;
+        const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
+          isMe ? "600" : "700"
+        } px-[100px]`;
 
         return (
-          <div
-            key={message.timestamp}
-            className='singleMessageContainer flex mb-4 px-[100px]'
-          >
+          <div key={message.timestamp} className={singleMessageClass}>
             <div className='pr-10'>
               <UserIcon
+                isPlaceholder={isMe}
                 isMe={message.uid === user.uid}
                 name={{ firstLetter, secondLetter }}
               />
             </div>
             <div className='h-fit'>{message.message}</div>
+            <div className='pl-10 ml-auto'>
+              <UserIcon
+                isMe={message.uid === user.uid}
+                name={{ firstLetter, secondLetter }}
+                isPlaceholder={!isMe}
+              />
+            </div>
           </div>
         );
       })}

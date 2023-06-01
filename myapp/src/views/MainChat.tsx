@@ -32,24 +32,33 @@ const MainChat = ({ user }: { user: User }) => {
 
   return (
     <>
-      <div className='chatContainer relative bg-gray-600 w-full py-[50px]'>
+      <div className='chatContainer relative bg-gray-600 w-full pb-[50px]'>
         {(data ?? []).map(d => {
           const splittedName = (d.userName ?? "").split(" ");
           const firstLetter = splittedName[0]?.[0] ?? "";
           const secondLetter = splittedName?.[1]?.[0] ?? "";
+          const isMe = d.uid === user.uid;
+          const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
+            isMe ? "600" : "700"
+          } px-[100px]`;
 
           return (
-            <div
-              key={d.timestamp}
-              className='singleMessageContainer flex mb-4 px-[100px]'
-            >
+            <div key={d.timestamp} className={singleMessageClass}>
               <div className='pr-10'>
                 <UserIcon
+                  isPlaceholder={isMe}
                   isMe={d.uid === user.uid}
                   name={{ firstLetter, secondLetter }}
                 />
               </div>
               <div className='h-fit'>{d.message}</div>
+              <div className='pl-10 ml-auto'>
+                <UserIcon
+                  isMe={d.uid === user.uid}
+                  name={{ firstLetter, secondLetter }}
+                  isPlaceholder={!isMe}
+                />
+              </div>
             </div>
           );
         })}

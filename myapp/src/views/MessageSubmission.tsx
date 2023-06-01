@@ -10,7 +10,7 @@ const MessageSubmission = ({ onSubmit, message, onChange }) => {
             className='flex justify-center py-4 box-shadow-custom'
           >
             <textarea
-              className='resize-none w-[400px] bg-gray-600 rounded-lg focus:outline-none p-4 border border-slate-400 overflow-y-hidden'
+              className='resize-none w-[400px] bg-gray-500 rounded-lg focus:outline-none p-4 overflow-y-hidden'
               id='message'
               value={message}
               onChange={onChange}
