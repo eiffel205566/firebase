@@ -6,6 +6,7 @@ import { collection } from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
+import "./HomePage.css";
 
 const HomePage = ({
   user,
@@ -30,7 +31,7 @@ const HomePage = ({
   )?.userName;
 
   return (
-    <div className='homePageContainer min-h-[100vh] w-full flex'>
+    <div className='homePageContainer min-h-[100vh] min-w-[500px] w-full flex'>
       <div className='modalContainer min-w-[200px] bg-gray-800 p-4'>
         <div className='fixed top-0'>
           {user && <div>{`Hello, ${user.displayName}`}</div>}
