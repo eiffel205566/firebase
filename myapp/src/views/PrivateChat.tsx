@@ -74,7 +74,7 @@ const PrivateChat = ({
   };
 
   return (
-    <div className='chatContainer relative bg-gray-600 w-full py-[50px]'>
+    <div className='chatContainer relative bg-gray-600 w-full pb-[50px]'>
       {currentMessages.map(message => {
         const personName =
           message.uid === user.uid ? user.displayName : otherName;
