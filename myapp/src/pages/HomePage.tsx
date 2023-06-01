@@ -61,7 +61,7 @@ const HomePage = ({
                 <div
                   onClick={() => navigate(`/home/${d.uid}`)}
                   className={className}
-                  key={index}
+                  key={d.uid}
                 >
                   {d.userName}
                 </div>
