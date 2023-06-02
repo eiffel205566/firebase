@@ -60,6 +60,7 @@ export const SingleLine = ({
           isMe={isMe}
           name={{ firstLetter, secondLetter }}
           isPlaceholder={!isMe}
+          isEven={isEven}
         />
       </div>
     </div>
