@@ -63,9 +63,7 @@ const RoomChat = ({ roomId, user }: { roomId; user: User }) => {
         const firstLetter = splittedName[0]?.[0] ?? "";
         const secondLetter = splittedName?.[1]?.[0] ?? "";
         const isMe = message.uid === user.uid;
-        const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
-          index % 2 === 0 ? "700" : "600"
-        } px-[100px]`;
+        const singleMessageClass = `singleMessageContainer flex py-4 px-[100px]`;
 
         return (
           <SingleLine

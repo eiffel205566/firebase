@@ -45,7 +45,10 @@ export const SingleLine = ({
   isEven: boolean;
 }) => {
   return (
-    <div className={className}>
+    <div
+      style={{ backgroundColor: isEven ? "#374151" : "#4b5563" }} // tailwind keeps failing locally
+      className={className}
+    >
       <div className='pr-10'>
         <UserIcon
           isPlaceholder={isMe}

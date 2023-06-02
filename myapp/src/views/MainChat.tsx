@@ -38,9 +38,7 @@ const MainChat = ({ user }: { user: User }) => {
           const firstLetter = splittedName[0]?.[0] ?? "";
           const secondLetter = splittedName?.[1]?.[0] ?? "";
           const isMe = d.uid === user.uid;
-          const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
-            index % 2 === 0 ? "700" : "600"
-          } px-[100px]`;
+          const singleMessageClass = `singleMessageContainer flex py-4 px-[100px]`;
 
           return (
             <SingleLine
