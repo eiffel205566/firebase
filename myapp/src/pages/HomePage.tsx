@@ -13,6 +13,7 @@ import BurgerMenu from "../views/BurgerMenu.tsx";
 import SlideIn from "../views/SlideIn.tsx";
 import Chevron from "../views/Chevron.tsx";
 import RoomChat from "../views/RoomChat.tsx";
+import UserIcon from "../views/User.tsx";
 
 const HomePage = ({
   user,
@@ -63,12 +64,19 @@ const HomePage = ({
 
       return (
         user.uid !== d.uid && (
-          <div
-            onClick={() => navigate(`/private/${d.uid}`)}
-            className={className}
-            key={v4()}
-          >
-            {d.userName}
+          <div className='flex'>
+            <UserIcon
+              className={`fill-${d.status === "online" ? "green" : "gray"}-300`}
+              width={24}
+              height={24}
+            />
+            <div
+              onClick={() => navigate(`/private/${d.uid}`)}
+              className={className}
+              key={v4()}
+            >
+              {d.userName}
+            </div>
           </div>
         )
       );
