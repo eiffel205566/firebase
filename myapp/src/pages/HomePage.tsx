@@ -1,15 +1,9 @@
+import { v4 } from "uuid";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { query } from "firebase/database";
 import { useAuth, useFirestore, useFirestoreCollectionData } from "reactfire";
-import {
-  collection,
-  doc,
-  setDoc,
-  where,
-  or,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import MainChat from "../views/MainChat.tsx";
 import { User } from "firebase/auth";
 import PrivateChat from "../views/PrivateChat.tsx";
@@ -72,7 +66,7 @@ const HomePage = ({
           <div
             onClick={() => navigate(`/private/${d.uid}`)}
             className={className}
-            key={d.uid}
+            key={v4()}
           >
             {d.userName}
           </div>
@@ -84,7 +78,7 @@ const HomePage = ({
       <div
         className='cursor-pointer hover:text-green-300'
         onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
-        key={room.id}
+        key={v4()}
       >
         {room.roomName ?? room.NO_ID_FIELD}
       </div>
