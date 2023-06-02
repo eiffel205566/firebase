@@ -79,6 +79,16 @@ const HomePage = ({
         )
       );
     });
+  const renderRoom = () =>
+    (roomMessagesQueryResult.data ?? []).map(room => (
+      <div
+        className='cursor-pointer hover:text-green-300'
+        onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
+        key={room.id}
+      >
+        {room.roomName ?? room.NO_ID_FIELD}
+      </div>
+    ));
 
   // TODO: update the JSX
   return (
@@ -89,14 +99,18 @@ const HomePage = ({
           <div className='flex flex-col gap-2 p-1'>
             Chat With:
             {renderUser()}
-            <div className='flex flex-col justify-center cursor-pointer'>
-              <Exit className='fill-red-300 hover:fill-red-600' />
-            </div>
+            <br />
             <div
               className='text-white hover:text-green-300 cursor-pointer'
               onClick={() => navigate("/home")}
             >
-              To Public Room
+              To Public
+            </div>
+            <br />
+            Join Room:
+            {renderRoom()}
+            <div className='flex flex-col justify-center cursor-pointer'>
+              <Exit className='fill-red-300 hover:fill-red-600' />
             </div>
           </div>
         }
@@ -142,15 +156,7 @@ const HomePage = ({
             )}
             <br />
             Rooms:
-            {(roomMessagesQueryResult.data ?? []).map(room => (
-              <div
-                className='cursor-pointer hover:text-green-300'
-                onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
-                key={room.id}
-              >
-                {room.roomName ?? room.NO_ID_FIELD}
-              </div>
-            ))}
+            {renderRoom()}
             <br />
             <br />
             <div>Chat With:</div>
