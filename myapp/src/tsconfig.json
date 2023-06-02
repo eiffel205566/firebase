@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "allowImportingTsExtensions": true
   },
   "include": ["index.tsx", "display", "withSuspense", "withoutSuspense"],
   "references": [{ "path": "./tsconfig.node.json" }]
