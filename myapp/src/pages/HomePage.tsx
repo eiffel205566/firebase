@@ -15,6 +15,7 @@ import Chevron from "../views/Chevron.tsx";
 import RoomChat from "../views/RoomChat.tsx";
 import UserIcon from "../views/User.tsx";
 import ChatRoom from "../views/ChatRoom.tsx";
+import AddRoom from "../views/AddRoom.tsx";
 
 const HomePage = ({
   user,
@@ -134,11 +135,14 @@ const HomePage = ({
               </div>
             )}
             <br />
-            <div
-              className='cursor-pointer hover:text-green-300'
-              onClick={() => setIsAddRoom(true)}
-            >
-              Create A Room
+            <div className='flex gap-2'>
+              <AddRoom className='fill-green-300' />
+              <div
+                className='cursor-pointer hover:text-green-300'
+                onClick={() => setIsAddRoom(true)}
+              >
+                Create A Room
+              </div>
             </div>
             {isAddRoom && (
               <div>
