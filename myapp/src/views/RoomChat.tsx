@@ -1,45 +1,31 @@
 import { User } from "firebase/auth";
 import { query } from "firebase/database";
-import {
-  collection,
-  doc,
-  setDoc,
-  where,
-  or,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { SingleLine } from "./UserIcon.tsx";
 import MessageSubmission from "./MessageSubmission.tsx";
 
-const PrivateChat = ({
-  user,
-  otherUid,
-  otherName,
-}: {
-  user: User;
-  otherUid: string;
-  otherName: string;
-}) => {
+const RoomChat = ({ roomId, user }: { roomId; user: User }) => {
   const [message, setMessage] = useState<string>("");
   const firestore = useFirestore();
-  const privateMessagesRef = collection(firestore, "privateMessages");
-  const privateMessagesQueryResult = useFirestoreCollectionData<{
+  const roomMessagesRef = collection(firestore, "rooms");
+  const roomMessagesQueryResult = useFirestoreCollectionData<{
     NO_ID_FIELD: string;
-    messages: Array<{ message: string; timestamp: number; uid: string }>;
-    participants: string[];
-  }>(
-    query(
-      privateMessagesRef,
-      or(
-        where("participants", "in", [[otherUid, user.uid]]),
-        where("participants", "in", [[user.uid, otherUid]])
-      )
-    )
+    messages: Array<{
+      message: string;
+      timestamp: number;
+      uid: string;
+      userName: string;
+    }>;
+    createId: string;
+    roomName: string;
+  }>(query(roomMessagesRef));
+  const room = (roomMessagesQueryResult.data ?? []).find(
+    r => r.NO_ID_FIELD === roomId
   );
-  const { status, data } = privateMessagesQueryResult;
-  const chatId = (data ?? [])[0]?.NO_ID_FIELD;
+
+  const { status, data } = roomMessagesQueryResult;
   const currentMessages = (data ?? [])[0]?.messages ?? [];
   const isSubmitDisabled =
     status === "loading" || message === "" || message == null;
@@ -50,36 +36,28 @@ const PrivateChat = ({
       return;
     }
 
-    if (!chatId) {
-      await setDoc(doc(privateMessagesRef), {
-        participants: [user.uid, otherUid],
+    if (room) {
+      await setDoc(doc(roomMessagesRef, room.NO_ID_FIELD), {
+        ...room,
         messages: [
+          ...currentMessages,
           {
             uid: user.uid,
+            userName: user.displayName,
             message,
             timestamp: Date.now(),
           },
         ],
       });
-    } else {
-      await updateDoc(doc(privateMessagesRef, chatId), {
-        messages: [
-          ...currentMessages,
-          { uid: user.uid, message, timestamp: Date.now() },
-        ],
-      });
     }
+
     setMessage("");
   };
 
   return (
-    <div
-      style={{ backgroundColor: "#4b5563" }} // 600 700: #374151
-      className='chatContainer relative w-full bg-gray-700 pb-[50px]'
-    >
-      {currentMessages.map((message, index) => {
-        const personName =
-          message.uid === user.uid ? user.displayName : otherName;
+    <div className='chatContainer relative bg-gray-600 w-full pb-[50px]'>
+      {(room?.messages ?? []).map((message, index) => {
+        const personName = message?.userName ?? "";
 
         const splittedName = (personName ?? "").split(" ");
         const firstLetter = splittedName[0]?.[0] ?? "";
@@ -104,10 +82,10 @@ const PrivateChat = ({
         onSubmit={handleSubmit}
         onChange={e => setMessage(e.target.value)}
         message={message}
-        otherName={otherName}
+        otherName='Others'
       />
     </div>
   );
 };
 
-export default PrivateChat;
+export default RoomChat;

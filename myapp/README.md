@@ -4,5 +4,6 @@ This is a chat room application that allows users to communicate with each other
 
 Features
 
-    User authentication: Users can create accounts, log in, and log out to access the chat rooms.
-    chat target selection: Users can choose who to chat with
+- chat with people of your choice privately
+- chat with everyone publicly
+- chat with a group of people

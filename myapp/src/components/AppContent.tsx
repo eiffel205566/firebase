@@ -78,6 +78,17 @@ export const AppContent = () => {
             }
           />
         ))}
+        <Route
+          path='/rooms/:roomId'
+          element={
+            <ProtectedRoute user={signInCheckResult?.user} status={status}>
+              <HomePage
+                user={signInCheckResult?.user as User} // undefined user will be handled by ProtectedRoute
+                signOut={logout}
+              />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
