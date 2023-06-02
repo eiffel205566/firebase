@@ -14,6 +14,7 @@ import SlideIn from "../views/SlideIn.tsx";
 import Chevron from "../views/Chevron.tsx";
 import RoomChat from "../views/RoomChat.tsx";
 import UserIcon from "../views/User.tsx";
+import ChatRoom from "../views/ChatRoom.tsx";
 
 const HomePage = ({
   user,
@@ -64,7 +65,7 @@ const HomePage = ({
 
       return (
         user.uid !== d.uid && (
-          <div className='flex'>
+          <div className='flex gap-1'>
             <UserIcon
               className={`fill-${d.status === "online" ? "green" : "gray"}-300`}
               width={24}
@@ -83,12 +84,15 @@ const HomePage = ({
     });
   const renderRoom = () =>
     (roomMessagesQueryResult.data ?? []).map(room => (
-      <div
-        className='cursor-pointer hover:text-green-300'
-        onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
-        key={v4()}
-      >
-        {room.roomName ?? room.NO_ID_FIELD}
+      <div className='flex gap-2'>
+        <ChatRoom className='fill-green-300' width={24} height={24} />
+        <div
+          className='cursor-pointer hover:text-green-300'
+          onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
+          key={v4()}
+        >
+          {room.roomName ?? room.NO_ID_FIELD}
+        </div>
       </div>
     ));
 
