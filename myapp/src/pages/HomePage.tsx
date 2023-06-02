@@ -59,8 +59,8 @@ const HomePage = ({
 
   const renderUser = () =>
     (onlineUsersQueryResult?.data ?? []).map(d => {
-      const className = `max-w-[150px] truncate hover:text-green-300 cursor-pointer ${
-        d.status === "online" ? "text-white" : "text-slate-300"
+      const className = `max-w-[180px] truncate hover:text-green-300 cursor-pointer ${
+        d.status === "online" ? "text-[#d9d9d9]" : "text-slate-300"
       }`;
 
       return (
@@ -87,7 +87,7 @@ const HomePage = ({
       <div className='flex gap-2'>
         <ChatRoom className='fill-green-300' width={24} height={24} />
         <div
-          className='cursor-pointer hover:text-green-300'
+          className='cursor-pointer hover:text-green-300 truncate'
           onClick={() => navigate(`/rooms/${room.NO_ID_FIELD}`)}
           key={v4()}
         >
@@ -174,7 +174,7 @@ const HomePage = ({
               <Exit className='fill-red-300' />
             </div>
             <button
-              className='hover:text-red-300 text-white py-2 rounded'
+              className='hover:text-red-300 text-[#d9d9d9] py-2 rounded'
               onClick={() => signOut(auth)}
             >
               Sign out
