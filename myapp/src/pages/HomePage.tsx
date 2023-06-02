@@ -16,6 +16,7 @@ import RoomChat from "../views/RoomChat.tsx";
 import UserIcon from "../views/User.tsx";
 import ChatRoom from "../views/ChatRoom.tsx";
 import AddRoom from "../views/AddRoom.tsx";
+import BackToPublic from "../views/BackToPublic.tsx";
 
 const HomePage = ({
   user,
@@ -127,11 +128,14 @@ const HomePage = ({
           <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
             {user && <div>{`Hello, ${user.displayName}`}</div>}
             {(otherUid != null || roomId != null) && (
-              <div
-                className='text-[#d9d9d9] hover:text-green-300 cursor-pointer'
-                onClick={() => navigate("/home")}
-              >
-                Back to Public Room
+              <div className='flex gap-2'>
+                <BackToPublic className='fill-green-300' />
+                <div
+                  className='text-[#d9d9d9] hover:text-green-300 cursor-pointer'
+                  onClick={() => navigate("/home")}
+                >
+                  Back to Public Room
+                </div>
               </div>
             )}
             <br />
