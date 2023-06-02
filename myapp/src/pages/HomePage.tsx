@@ -128,7 +128,7 @@ const HomePage = ({
             {user && <div>{`Hello, ${user.displayName}`}</div>}
             {(otherUid != null || roomId != null) && (
               <div
-                className='text-white hover:text-green-300 cursor-pointer'
+                className='text-[#d9d9d9] hover:text-green-300 cursor-pointer'
                 onClick={() => navigate("/home")}
               >
                 Back to Public Room
