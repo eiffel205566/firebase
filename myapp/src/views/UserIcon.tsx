@@ -4,10 +4,12 @@ const UserIcon = ({
   isMe,
   name,
   isPlaceholder,
+  isEven = false,
 }: {
   isMe: boolean;
   name: { firstLetter: string; secondLetter: string };
   isPlaceholder: boolean;
+  isEven: boolean;
 }) => {
   const finalName = isMe
     ? "Me"
@@ -15,7 +17,7 @@ const UserIcon = ({
         name.secondLetter ? ` ${name.secondLetter}` : ""
       }`;
   const userClass = `h-[30px] w-[30px] rounded-full bg-gray-${
-    isMe ? "700" : "600"
+    isEven ? "600" : "800"
   } flex items-center justify-center`;
 
   return isPlaceholder ? (
@@ -33,12 +35,14 @@ export const SingleLine = ({
   firstLetter,
   secondLetter,
   message,
+  isEven = false,
 }: {
   className: string;
   isMe: boolean;
   firstLetter: string;
   secondLetter: string;
   message: string;
+  isEven: boolean;
 }) => {
   return (
     <div className={className}>
@@ -47,6 +51,7 @@ export const SingleLine = ({
           isPlaceholder={isMe}
           isMe={isMe}
           name={{ firstLetter, secondLetter }}
+          isEven={isEven}
         />
       </div>
       <div className='h-fit'>{message}</div>

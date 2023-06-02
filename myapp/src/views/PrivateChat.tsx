@@ -83,7 +83,7 @@ const PrivateChat = ({
         const secondLetter = splittedName?.[1]?.[0] ?? "";
         const isMe = message.uid === user.uid;
         const singleMessageClass = `singleMessageContainer flex py-4 bg-slate-${
-          index % 2 === 0 ? "600" : "700"
+          index % 2 === 0 ? "700" : "600"
         } px-[100px]`;
 
         return (
@@ -94,6 +94,7 @@ const PrivateChat = ({
             firstLetter={firstLetter}
             secondLetter={secondLetter}
             message={message.message}
+            isEven={index % 2 === 0}
           />
         );
       })}

@@ -45,15 +45,7 @@ const HomePage = ({
   const roomMessagesRef = collection(firestore, "rooms");
   const roomMessagesQuery = query(roomMessagesRef);
   const roomMessagesQueryResult = useFirestoreCollectionData(roomMessagesQuery);
-  const roomQueryResult = useFirestoreCollectionData(
-    query(roomMessagesRef, where("creatorId", "==", user.uid))
-  );
 
-  // const userRoomQuery = useFirestoreCollectionData(
-  //   query(onlineUsersRef, and (
-  //     where("uid", "==", uid ?? "")
-  //     )
-  // )
   const createRoom = async () => {
     if (roomName == null || roomName === "") return;
     await setDoc(doc(roomMessagesRef), {
@@ -68,9 +60,6 @@ const HomePage = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isAddRoom, setIsAddRoom] = useState(false);
   const [roomName, setRoomName] = useState("");
-
-  // TODO: remove console log!!!!
-  console.log(roomName);
 
   const renderUser = () =>
     (onlineUsersQueryResult?.data ?? []).map(d => {
@@ -116,7 +105,7 @@ const HomePage = ({
         <div className='modalContainer min-w-[200px] bg-gray-800 px-2'>
           <div className='no-scrollbar fixed top-0 bottom-0 w-[200px] overflow-y-auto'>
             {user && <div>{`Hello, ${user.displayName}`}</div>}
-            {otherUid != null && (
+            {(otherUid != null || roomId != null) && (
               <div
                 className='text-white hover:text-green-300 cursor-pointer'
                 onClick={() => navigate("/home")}
@@ -182,7 +171,7 @@ const HomePage = ({
         </div>
         {/* // TODO: going forward definitely do not use HomePage to manage following */}
         {roomId ? (
-          <RoomChat user={user} otherUid='aaa' otherName='xxx' />
+          <RoomChat user={user} roomId={roomId} />
         ) : otherUid && otherName ? (
           <PrivateChat user={user} otherUid={otherUid} otherName={otherName} />
         ) : (
