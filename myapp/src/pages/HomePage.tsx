@@ -99,14 +99,14 @@ const HomePage = ({
           <div className='flex flex-col gap-2 p-1'>
             Chat With:
             {renderUser()}
-            <br />
+            <div className='border' />
             <div
               className='text-white hover:text-green-300 cursor-pointer'
               onClick={() => navigate("/home")}
             >
               To Public
             </div>
-            <br />
+            <div className='border' />
             Join Room:
             {renderRoom()}
             <div className='flex flex-col justify-center cursor-pointer'>
