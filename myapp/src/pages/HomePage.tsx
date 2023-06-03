@@ -118,7 +118,10 @@ const HomePage = ({
             Join Room:
             {renderRoom()}
             <div className='flex flex-col justify-center cursor-pointer'>
-              <Exit className='fill-red-300 hover:fill-red-600' />
+              <Exit
+                onClick={() => signOut(auth)}
+                className='fill-red-300 hover:fill-red-600'
+              />
             </div>
           </div>
         }
