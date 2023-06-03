@@ -4,13 +4,16 @@ const Exit = ({
   className,
   width = 20,
   height = 20,
+  onClick,
 }: {
   className: string;
   width?: number;
   height?: number;
+  onClick?: () => void;
 }) => {
   return (
     <svg
+      onClick={onClick}
       className={className}
       height={`${height}px`}
       width={`${width}px`}
